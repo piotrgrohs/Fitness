@@ -59,7 +59,7 @@ function App() {
   return (
     <ToggleStorybook>
       <Provider store={store}>
-      <PersistGate loading={null} persistor={persistedStore}>
+      {/* <PersistGate loading={null} persistor={persistedStore}> */}
         <RootStoreProvider value={rootStore}>
           <SafeAreaProvider initialMetrics={initialWindowMetrics}>
             <RootNavigator
@@ -69,7 +69,7 @@ function App() {
             />
           </SafeAreaProvider>
         </RootStoreProvider>
-        </PersistGate>
+        {/* </PersistGate> */}
       </Provider>
     </ToggleStorybook>
   )
