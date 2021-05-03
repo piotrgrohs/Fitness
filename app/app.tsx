@@ -17,7 +17,7 @@ import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-c
 import { initFonts } from "./theme/fonts" // expo
 import * as storage from "./utils/storage"
 import { Provider } from 'react-redux';
-import {store, persistedStore} from './models/redux/store';
+import {store} from './models/redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 
 
