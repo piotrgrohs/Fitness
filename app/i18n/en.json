@@ -1,0 +1,34 @@
+{
+  "common": {
+    "ok": "OK!",
+    "cancel": "Cancel",
+    "back": "Back"
+  },
+  "errors": {
+    "invalidEmail": "Invalid email address."
+  },
+  "welcomeScreen": {
+    "poweredBy": "POWERED BY IGNITE",
+    "readyForLaunch": "Ready for launch.",
+    "continue": "CONTINUE",
+    "start": "START"
+  },
+  "infomationScreen": {
+    "howTo": "HOW TO",
+    "height":"HEIGHT",
+    "name":"NAME",
+    "weight":"WEIGHT",
+    "age":"AGE",
+    "title": "TELL ME ABOUT YOURSELF",
+    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
+    "reactotron": "COMPLETE",
+    "androidReactotronHint": "Give me few information about you",
+    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+
+
+  "storybook": {
+    "placeholder": "Placeholder",
+    "field": "Field"
+  }
+}
