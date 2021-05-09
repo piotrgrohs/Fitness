@@ -14,20 +14,15 @@ import { Calendar } from 'react-native-calendars';
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
-  paddingHorizontal: spacing[4],
 }
 
 
 const CONTINUE: TextStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
+  paddingVertical: spacing,
   backgroundColor: "#00eeff"
 }
 
 const TEXT: TextStyle = {
-  color: color.palette.white,
-  fontFamily: typography.primary
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const TITLE: TextStyle = {
@@ -51,24 +46,21 @@ const CONTENT: TextStyle = {
   ...TEXT,
   fontSize: 20,
   lineHeight: 22,
-  marginBottom: spacing[5],
+  marginBottom: spacing,
 
 }
 
 const FOOTER: ViewStyle = {}
 const FOOTER_CONTENT: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
+  paddingVertical: spacing,
 }
 
 const LIST_ITEM: TextStyle = {
   fontSize: 20,
-  paddingBottom: 10,
   textTransform: 'uppercase'
 }
 
 const BLOCK: ViewStyle = {
-  paddingBottom: spacing[5],
 }
 
 
@@ -81,7 +73,7 @@ export function ProgressScreen() {
   let exercise_name = id => workouts_state[id].title
 
   const renderItem = ({ item }) => <View style={BLOCK}><Text key={item.id}>Name: {exercise_name(item.id)}  </Text>
-                                                                          <Text>Reps {item.reps} - Sets {item.sets}</Text></View>
+                                                                          <Text>Reps {item.reps} - Sets {item.sets} {moment(item.date).format('YYYY-MM-DD').toString()}</Text></View>
   // <Text key={exercise.id}>Date {moment(exercise.date).format('DD-MM-YYYY')},Name {exercise_name(exercise.id)}, Reps {exercise.reps}, Sets {exercise.sets}</Text>
   const navigation = useNavigation();
    
@@ -89,7 +81,7 @@ export function ProgressScreen() {
     setExercises( exercises.filter( excercise =>  moment(excercise.date).format('YYYY-MM-DD')== day.dateString))
   }
   const home = () => { navigation.navigate("home") }
-  const markedDates = exercises.reduce((exercise) => ({ [moment(exercise.date).format('YYYY-MM-DD')]: { marked: true } }), {})
+  const markedDates = exercises.reduce((exercise) => ({ [moment(exercise.date,"YYY-MM-DD").format('YYYY-MM-DD').toString()]: { marked: true, dotColor: 'white'} }), {})
   return (
     <View testID="ProgressScreen" style={FULL}>
       <Wallpaper />
