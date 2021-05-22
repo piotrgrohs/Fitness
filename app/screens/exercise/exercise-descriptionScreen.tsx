@@ -34,6 +34,7 @@ const TITLE: TextStyle = {
     ...TEXT,
     ...BOLD, 
     fontSize: 28,
+    paddingBottom: 50,
     lineHeight: 38,
     textAlign: "center",
     paddingTop: 50
@@ -71,20 +72,23 @@ export function ExerciseDescriptionScreen({route}) {
     
     const navigation = useNavigation();
     const { id  } = route.params;
-    const submit = () => { 
-        navigation.navigate("exercisedo",{id});
-    } 
-    const exercise = useSelector(state => state.exercise.list[id]) 
-
+    
     const dispatch = useDispatch(); 
+    const exercise = useSelector(state => state.exercise.list[id]) 
+    const submit = () => { 
+        navigation.navigate("exercisedo",{id,routeReps:exercise.reps,routeSets:exercise.sets});
+    } 
+    
 
     return (
         <View testID="ExerciseDescriptionScreen" style={FULL}>
             <Wallpaper />
 
                 <Text style={TITLE} preset='header' text={exercise.title} />
-                <FlatList style={CONTAINER} data={exercise.data} renderItem={({ item }) => <Text  
-                      key={item}  >{item}</Text>}/> 
+                <FlatList style={CONTAINER} data={exercise.data} renderItem={({ item, index}) => <Text  
+                      key={item}  >{index+1}.{item}</Text>}/> 
+                      <Text>Default reps: {exercise.reps}</Text>
+                      <Text>Default sets: {exercise.sets}</Text>
             <SafeAreaView style={FOOTER}>
                 <View style={FOOTER_CONTENT}>
                     <Button style={CONTINUE}

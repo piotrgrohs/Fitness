@@ -63,24 +63,18 @@ const FOOTER_CONTENT: ViewStyle = {
 }
 
 export function ExerciseScreen() {
-
     const navigation = useNavigation();
- 
-
     const list = useSelector(state => state.exercise.list)
-    const listDisplay = Object.keys(list).map((key)=> list[key])
+    const listDisplay = Object.keys(list).map((key)=> list[key]).sort((a,b)=> a.title.localeCompare(b.title))
     const home = () => {navigation.navigate("home")} 
     return (
-        
         <View testID="ExerciseScreen" style={FULL}>
             <Wallpaper />
                  <Header headerText="Exercises" leftIcon="back" titleStyle={TITLE} onLeftPress={home}/>
                 <FlatList data={listDisplay} style={CONTAINER}
                     renderItem={({ item }) => <Text onPress={()=> navigation.navigate("exercisedescription",{id:item.id})}
-                     style={LIST_ITEM} key={item.id.toString()}  >{item.title.toString()}</Text>}
-                />
-          
+                     style={LIST_ITEM} key={item.id.toString()}  >• {item.title.toString()}</Text>}
+                />     
         </View >
     )
-
 }
