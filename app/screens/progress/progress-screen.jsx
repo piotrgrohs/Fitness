@@ -114,6 +114,7 @@ export function ProgressScreen() {
     let markedDatesCpy = {...markedDates}
     if(day_before != ''){ markedDatesCpy[day_before] = {...markedDatesCpy[day_before], selected: false}}
     markedDatesCpy[day.dateString] = {...markedDatesCpy[day.dateString], selected: !isMarkedBefore}
+    if(!isMarkedBefore == false){setExercises(exercises)}
     setDayBefore(day.dateString)
     setMarkedDates(markedDatesCpy)
   }
