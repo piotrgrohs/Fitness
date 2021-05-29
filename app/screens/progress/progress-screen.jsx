@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useEffect} from "react"
 import { observer } from "mobx-react-lite"
 import { useSelector, useDispatch } from "react-redux"
 import { SafeAreaView, ViewStyle, Alert } from "react-native"
@@ -11,9 +11,12 @@ import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
 import moment from "moment"
 import { Calendar } from "react-native-calendars"
+import { MarkunreadTwoTone } from "@material-ui/icons"
 
 const FULL: ViewStyle = { flex: 1 }
-const CONTAINER: ViewStyle = {}
+const CONTAINER: ViewStyle = {
+  paddingTop: 20
+}
 
 const CONTINUE: TextStyle = {
   paddingVertical: spacing,
@@ -67,8 +70,24 @@ export function ProgressScreen() {
   const list = useSelector((state) => state.exercise.list)
   const listDisplay = Object.keys(list).map((key) => list[key])
   const [exercises_state, setExercises] = React.useState(exercises)
+  const [day_before, setDayBefore] = React.useState('')
   const [workouts_state] = React.useState(listDisplay)
+  const [markedDates, setMarkedDates] = React.useState({})
   let exercise_name = (id) => workouts_state[id].title
+
+
+  useEffect(() => {
+    setMarkedDates(exercises.reduce(
+      (markedDates, exercise) => (
+        (markedDates[moment(exercise.date).format("YYYY-MM-DD").toString()] = {
+          marked: true,
+          dotColor: "white",
+        }),
+        markedDates
+      ),
+      {},
+    )
+  )},[]) 
 
   const renderItem = ({ item }) => (
     <View>
@@ -87,24 +106,23 @@ export function ProgressScreen() {
       exercises.filter(
         (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString,
       ),
-    )
+      )
+    const isMarkedBefore = !!(
+      markedDates[day.dateString] && 
+      markedDates[day.dateString].selected
+    );
+    let markedDatesCpy = {...markedDates}
+    if(day_before != ''){ markedDatesCpy[day_before] = {...markedDatesCpy[day_before], selected: false}}
+    markedDatesCpy[day.dateString] = {...markedDatesCpy[day.dateString], selected: !isMarkedBefore}
+    setDayBefore(day.dateString)
+    setMarkedDates(markedDatesCpy)
   }
   const reset = () => {
+    setExercises(exercises)
   }
   const home = () => {
     navigation.navigate("home")
   }
-  const markedDates = exercises.reduce(
-    (markedDates, exercise) => (
-      (markedDates[moment(exercise.date).format("YYYY-MM-DD").toString()] = {
-        selected: false,
-        marked: true,
-        dotColor: "white",
-      }),
-      markedDates
-    ),
-    {},
-  )
 
   return (
     <View testID="ProgressScreen" style={FULL}>
