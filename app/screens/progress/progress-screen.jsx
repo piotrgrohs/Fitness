@@ -1,4 +1,4 @@
-import React,{useEffect} from "react"
+import React, { useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { useSelector, useDispatch } from "react-redux"
 import { SafeAreaView, ViewStyle, Alert } from "react-native"
@@ -70,30 +70,33 @@ export function ProgressScreen() {
   const list = useSelector((state) => state.exercise.list)
   const listDisplay = Object.keys(list).map((key) => list[key])
   const [exercises_state, setExercises] = React.useState(exercises)
-  const [day_before, setDayBefore] = React.useState('')
+  const [day_before, setDayBefore] = React.useState("")
   const [workouts_state] = React.useState(listDisplay)
   const [markedDates, setMarkedDates] = React.useState({})
   let exercise_name = (id) => workouts_state[id].title
 
-
   useEffect(() => {
-    setMarkedDates(exercises.reduce(
-      (markedDates, exercise) => (
-        (markedDates[moment(exercise.date).format("YYYY-MM-DD").toString()] = {
-          marked: true,
-          dotColor: "white",
-        }),
-        markedDates
+    setMarkedDates(
+      exercises.reduce(
+        (markedDates, exercise) => (
+          (markedDates[moment(exercise.date).format("YYYY-MM-DD").toString()] = {
+            marked: true,
+            dotColor: "yellow",
+          }),
+          markedDates
+        ),
+        {},
       ),
-      {},
     )
-  )},[]) 
+  }, [])
 
   const renderItem = ({ item }) => (
     <View>
       <Text style={CENTER}>{moment(item.date).format("YYYY-MM-DD").toString()}</Text>
       <View style={BLOCK}>
-        <Text >Exercise: {exercise_name(item.id)} </Text>
+        <Text>
+          <Text style={{ color: "yellow" }}>Exercise:</Text> {exercise_name(item.id)}{" "}
+        </Text>
         <Text>
           Reps {item.reps} - Sets {item.sets}
         </Text>
@@ -102,18 +105,18 @@ export function ProgressScreen() {
   )
   const navigation = useNavigation()
   const pickDate = (day) => {
-    const isMarkedBefore = !!(
-      markedDates[day.dateString] && 
-      markedDates[day.dateString].selected
-    );
-    
-    let markedDatesCpy = {...markedDates}
-    if(day_before != ''){ markedDatesCpy[day_before] = {...markedDatesCpy[day_before], selected: false}}
-    markedDatesCpy[day.dateString] = {...markedDatesCpy[day.dateString], selected: true}
+    const isMarkedBefore = !!(markedDates[day.dateString] && markedDates[day.dateString].selected)
+
+    let markedDatesCpy = { ...markedDates }
+    if (day_before != "") {
+      markedDatesCpy[day_before] = { ...markedDatesCpy[day_before], selected: false }
+    }
+    markedDatesCpy[day.dateString] = { ...markedDatesCpy[day.dateString], selected: true }
     setExercises(
-        exercises.filter(
-          (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString
-        ),) 
+      exercises.filter(
+        (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString,
+      ),
+    )
     console.log(exercises_state)
     setDayBefore(day.dateString)
     setMarkedDates(markedDatesCpy)
@@ -168,7 +171,12 @@ export function ProgressScreen() {
         onDayPress={(day) => pickDate(day)}
         markedDates={markedDates}
       />
-      <FlatList style={CONTAINER} data={exercises_state} renderItem={renderItem} keyExtractor={(item) => item.date}/>
+      <FlatList
+        style={CONTAINER}
+        data={exercises_state}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.date}
+      />
     </View>
   )
 }

@@ -1,12 +1,10 @@
 import React from "react"
-import { observer } from "mobx-react-lite"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { SafeAreaView, ViewStyle } from "react-native"
-import { Screen, Button, Text, Wallpaper, Header } from "../../components"
+import { Screen, Button, Text, Wallpaper } from "../../components"
 import { TextInput } from "react-native-gesture-handler"
 import { View, TextStyle } from "react-native"
 import { addExercise } from "../../models/redux/reducers/personSlice"
-import { CONNECTION_ERROR } from "apisauce"
 import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
 
@@ -89,29 +87,22 @@ export function ExerciseDoScreen({ route }) {
   const navigation = useNavigation()
 
   const increse_reps = () => {
-    let value = parseInt(reps)
-    const count = value + 1
-    setReps(count.toString())
+    let numberOfReps = parseInt(reps) + 1
+    setReps(numberOfReps.toString())
   }
   const decrese_reps = () => {
     let value = parseInt(reps)
-    let count = 1
-    if (value > 1) {
-      count = value - 1
-    }
-    setReps(count.toString())
+    let numberOfReps = value > 1 ? value - 1 : 1
+    setReps(numberOfReps.toString())
   }
   const increse_sets = () => {
-    const count = parseInt(sets) + 1
-    setSets(count.toString())
+    const numberOfSets = parseInt(sets) + 1
+    setSets(numberOfSets.toString())
   }
   const decrese_sets = () => {
     let value = parseInt(sets)
-    let count = 1
-    if (value > 1) {
-      count = value - 1
-    }
-    setSets(count.toString())
+    let numberOfSets = value > 1 ? value - 1 : 1
+    setSets(numberOfSets.toString())
   }
 
   const complete = () => {
