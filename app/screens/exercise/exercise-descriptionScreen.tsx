@@ -85,6 +85,7 @@ export function ExerciseDescriptionScreen({route}) {
             <Wallpaper />
 
                 <Text style={TITLE} preset='header' text={exercise.title} />
+                <Text>Exercise steps: </Text>
                 <FlatList style={CONTAINER} data={exercise.data} renderItem={({ item, index}) => <Text  
                       key={item}  >{index+1}.{item}</Text>}/> 
                       <Text>Default reps: {exercise.reps}</Text>

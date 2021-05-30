@@ -15,7 +15,7 @@ import { MarkunreadTwoTone } from "@material-ui/icons"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
-  paddingTop: 20
+  paddingTop: 20,
 }
 
 const CONTINUE: TextStyle = {
@@ -93,7 +93,7 @@ export function ProgressScreen() {
     <View>
       <Text style={CENTER}>{moment(item.date).format("YYYY-MM-DD").toString()}</Text>
       <View style={BLOCK}>
-        <Text key={item.id}>Exercise: {exercise_name(item.id)} </Text>
+        <Text >Exercise: {exercise_name(item.id)} </Text>
         <Text>
           Reps {item.reps} - Sets {item.sets}
         </Text>
@@ -102,19 +102,19 @@ export function ProgressScreen() {
   )
   const navigation = useNavigation()
   const pickDate = (day) => {
-    setExercises(
-      exercises.filter(
-        (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString,
-      ),
-      )
     const isMarkedBefore = !!(
       markedDates[day.dateString] && 
       markedDates[day.dateString].selected
     );
+    
     let markedDatesCpy = {...markedDates}
     if(day_before != ''){ markedDatesCpy[day_before] = {...markedDatesCpy[day_before], selected: false}}
-    markedDatesCpy[day.dateString] = {...markedDatesCpy[day.dateString], selected: !isMarkedBefore}
-    if(!isMarkedBefore == false){setExercises(exercises)}
+    markedDatesCpy[day.dateString] = {...markedDatesCpy[day.dateString], selected: true}
+    setExercises(
+        exercises.filter(
+          (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString
+        ),) 
+    console.log(exercises_state)
     setDayBefore(day.dateString)
     setMarkedDates(markedDatesCpy)
   }
@@ -168,7 +168,7 @@ export function ProgressScreen() {
         onDayPress={(day) => pickDate(day)}
         markedDates={markedDates}
       />
-      <FlatList style={CONTAINER} data={exercises_state} renderItem={renderItem} />
+      <FlatList style={CONTAINER} data={exercises_state} renderItem={renderItem} keyExtractor={(item) => item.date}/>
     </View>
   )
 }

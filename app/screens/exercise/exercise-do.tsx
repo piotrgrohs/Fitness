@@ -95,8 +95,8 @@ export function ExerciseDoScreen({ route }) {
   }
   const decrese_reps = () => {
     let value = parseInt(reps)
-    let count = 0
-    if (value > 0) {
+    let count = 1
+    if (value > 1) {
       count = value - 1
     }
     setReps(count.toString())
@@ -107,8 +107,8 @@ export function ExerciseDoScreen({ route }) {
   }
   const decrese_sets = () => {
     let value = parseInt(sets)
-    let count = 0
-    if (value > 0) {
+    let count = 1
+    if (value > 1) {
       count = value - 1
     }
     setSets(count.toString())

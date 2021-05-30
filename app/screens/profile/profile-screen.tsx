@@ -9,18 +9,13 @@ import { setAge, setName, setHeight, setWeight } from '../../models/redux/reduce
 import { CONNECTION_ERROR } from "apisauce"
 import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
+import { withRootStore } from "../../models"
+import { autorun } from "mobx"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
-}
-
-
-const CONTINUE: TextStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: "#00eeff"
 }
 
 const TEXT: TextStyle = {
@@ -38,32 +33,24 @@ const TITLE: TextStyle = {
 
 }
 
-const CONTINUE_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-
 const CONTENT: TextStyle = {
   ...TEXT,
-  fontSize: 20,
+  fontSize: 15,
+  width:'100%',
   lineHeight: 22,
-  marginBottom: spacing[5],
-
+  paddingBottom: 5
 }
 
-const FOOTER: ViewStyle = {  }
-const FOOTER_CONTENT: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
+const INPUT: TextStyle = {
+  fontSize: 20,
+  color: 'white',
+  width: '40%',
+  lineHeight: 22,
+  borderColor: '#636363',
+  borderBottomWidth: 2,
+  marginBottom: 30
 }
 
-const LIST_ITEM: TextStyle = {
-    fontSize: 20,
-    paddingBottom: 10,
-    textTransform: 'uppercase'
-}
 
 export function ProfileScreen() {
   const name_state = useSelector(state => state.person.name)
@@ -83,22 +70,28 @@ export function ProfileScreen() {
         <Text style={CONTENT}>Your name:</Text>
         <TextInput
           onChangeText={test => dispatch(setName(test))}
-          value={name_state} style={CONTENT} placeholderTextColor="#e0e0e0"
+          value={name_state} style={INPUT} placeholderTextColor="#e0e0e0"
         />
-        <Text style={CONTENT}>Height:</Text>
-        <TextInput
-          onChangeText={text => dispatch(setHeight(text))} 
-          value={height_state} style={CONTENT} placeholderTextColor="#e0e0e0"
-        />
+          <Text style={CONTENT}>Height:</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            onChangeText={text => dispatch(setHeight(text))} 
+            value={height_state } style={INPUT} placeholderTextColor="#e0e0e0"
+            />
+          <Text style={{}}>cm</Text>
+          </View>
         <Text style={CONTENT}>Weight:</Text>
+          <View style={{flexDirection: 'row'}}>
         <TextInput
           onChangeText={text => dispatch(setWeight(text))} 
-          value={weight_state} style={CONTENT} placeholderTextColor="#e0e0e0"
-        />
+          value={weight_state } style={INPUT} placeholderTextColor="#e0e0e0"
+          />
+          <Text style={{}}>kg</Text>
+          </View>
         <Text style={CONTENT}>Age:</Text>
         <TextInput
           onChangeText={text => dispatch(setAge(text))} 
-          value={age_state} style={CONTENT} placeholderTextColor="#e0e0e0"
+          value={age_state} style={INPUT} placeholderTextColor="#e0e0e0"
         />
       </Screen>
       
