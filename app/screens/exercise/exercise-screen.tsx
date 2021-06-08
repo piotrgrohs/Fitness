@@ -9,7 +9,6 @@ const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
-  
 }
 
 const TEXT: TextStyle = {
@@ -31,9 +30,9 @@ const LIST_ITEM: TextStyle = {
   marginBottom: 10,
   borderColor: "#636363",
   borderBottomWidth: 2,
-  width: 'auto',
+  width: "auto",
   textTransform: "uppercase",
-  alignSelf: 'flex-start'
+  alignSelf: "flex-start",
 }
 
 export function ExerciseScreen() {
@@ -58,7 +57,7 @@ export function ExerciseScreen() {
             style={LIST_ITEM}
             key={item.id.toString()}
           >
-             {item.title.toString()}
+            {item.title.toString()}
           </Text>
         )}
       />

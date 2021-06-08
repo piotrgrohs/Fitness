@@ -1,26 +1,13 @@
-import React from "react"
-import { observer } from "mobx-react-lite"
-import { useSelector, useDispatch } from 'react-redux'
-import { SafeAreaView, ViewStyle } from "react-native" 
-import { Screen, Button, Text, Wallpaper, Header } from "../../components"
-import { TextInput } from "react-native-gesture-handler"
-import { View, TextStyle } from "react-native"
-import { setAge, setName, setHeight, setWeight } from '../../models/redux/reducers/personSlice'
-import { CONNECTION_ERROR } from "apisauce"
-import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
+import React from "react"
+import { TextStyle, View, ViewStyle } from "react-native"
+import { Screen, Text, Wallpaper } from "../../components"
+import { color, spacing, typography } from "../../theme"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
-}
-
-
-const CONTINUE: TextStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: "#00eeff"
 }
 
 const TEXT: TextStyle = {
@@ -39,31 +26,13 @@ const TITLE: TextStyle = {
 
 }
 
-const CONTINUE_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-
-const CONTENT: TextStyle = {
-  ...TEXT,
-  fontSize: 20,
-  lineHeight: 22,
-  marginBottom: spacing[5],
-
-}
-
-const FOOTER: ViewStyle = {  }
-const FOOTER_CONTENT: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-}
-
 const LIST_ITEM: TextStyle = {
     fontSize: 20,
-    paddingBottom: 10,
-    textTransform: 'uppercase'
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    borderColor: "#636363",
+  borderBottomWidth: 2,
+  alignSelf: "flex-start",
 }
 
 export function HomeScreen() {

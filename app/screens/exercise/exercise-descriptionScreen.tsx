@@ -38,6 +38,17 @@ const CONTINUE_TEXT: TextStyle = {
   fontSize: 20,
   letterSpacing: 2,
 }
+const LIST_ITEM: TextStyle = {
+    fontSize: 20,
+    marginBottom: 10,
+    width: "auto",
+    alignSelf: "flex-start",
+  }
+  const LIST_TITLE: TextStyle = {
+    ...LIST_ITEM,
+    textTransform: 'uppercase',
+    marginLeft: 10
+  }
 
 const FOOTER: ViewStyle = {}
 const FOOTER_CONTENT: ViewStyle = {
@@ -59,19 +70,19 @@ export function ExerciseDescriptionScreen({ route }) {
     <View testID="ExerciseDescriptionScreen" style={FULL}>
       <Wallpaper />
       <Header headerText={exercise.title}  leftIcon="back" titleStyle={TITLE} onLeftPress={home} />
-      <Text>Exercise steps: </Text>
+      <Text style={LIST_TITLE}>Exercise steps: </Text>
       <FlatList
         style={CONTAINER}
         data={exercise.data}
         keyExtractor={({item,index}) => index}
         renderItem={({ item, index }) => (
-          <Text key={item}>
+          <Text key={item} style={LIST_ITEM}>
             {index + 1}.{item}
           </Text>
         )}
       />
-      <Text>Default reps: {exercise.reps}</Text>
-      <Text>Default sets: {exercise.sets}</Text>
+      <Text style={LIST_ITEM}>Default reps: {exercise.reps}</Text>
+      <Text style={LIST_ITEM}>Default sets: {exercise.sets}</Text>
       <SafeAreaView style={FOOTER}>
         <View style={FOOTER_CONTENT}>
           <Button

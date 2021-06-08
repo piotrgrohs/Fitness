@@ -73,6 +73,12 @@ const CONTENT: TextStyle = {
   marginBottom: spacing[5],
 }
 
+const CONTENT_TITLE: TextStyle = {
+  ...CONTENT,
+  borderColor: "#636363",
+  borderBottomWidth: 2,
+}
+
 const FOOTER: ViewStyle = {}
 const FOOTER_CONTENT: ViewStyle = {
   paddingVertical: spacing[4],
@@ -119,7 +125,7 @@ export function ExerciseDoScreen({ route }) {
       <Wallpaper />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Text style={TITLE} preset="header" text="Your excercise" />
-        <Text style={CONTENT}>Reps</Text>
+        <Text style={CONTENT_TITLE}>REPS</Text>
         <Button
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
@@ -139,7 +145,7 @@ export function ExerciseDoScreen({ route }) {
           text="-"
         />
         <Text style={MARGIN} />
-        <Text style={CONTENT}>Sets</Text>
+        <Text style={CONTENT_TITLE}>SETS</Text>
         <Button
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
