@@ -67,7 +67,6 @@ export function ProfileScreen() {
           onChangeText={(value) => dispatch(setName(value))}
           value={name_state}
           style={INPUT}
-          placeholderTextColor="#e0e0e0"
         />
         <Text style={CONTENT}>Height:</Text>
         <View style={{ flexDirection: "row" }}>
@@ -75,7 +74,6 @@ export function ProfileScreen() {
             onChangeText={(value) => dispatch(setHeight(value))}
             value={height_state}
             style={INPUT}
-            placeholderTextColor="#e0e0e0"
           />
           <Text style={{}}>cm</Text>
         </View>
@@ -85,7 +83,6 @@ export function ProfileScreen() {
             onChangeText={(value) => dispatch(setWeight(value))}
             value={weight_state}
             style={INPUT}
-            placeholderTextColor="#e0e0e0"
           />
           <Text style={{}}>kg</Text>
         </View>
@@ -94,7 +91,6 @@ export function ProfileScreen() {
           onChangeText={(value) => dispatch(setAge(value))}
           value={age_state}
           style={INPUT}
-          placeholderTextColor="#e0e0e0"
         />
       </Screen>
     </View>

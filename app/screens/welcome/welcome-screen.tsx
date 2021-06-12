@@ -78,8 +78,6 @@ const FOOTER_CONTENT: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-
-
 export function  WelcomeScreen () {
   const navigation = useNavigation()
   const nextScreen = () => navigation.navigate("info")
