@@ -95,6 +95,7 @@ export function ExerciseDoScreen({ route }) {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const exercises = useSelector((state) => state.person.exercises)
+
   const increse_reps = () => {
     let numberOfReps = parseInt(reps) + 1
     setReps(numberOfReps.toString())
@@ -144,7 +145,7 @@ export function ExerciseDoScreen({ route }) {
           text="+"
         />
         <TextInput
-          onChangeText={(test) => setReps(test)}
+          onChangeText={(value) => setReps(value)}
           value={reps}
           style={CONTENT}
           placeholderTextColor="#e0e0e0"
@@ -164,7 +165,7 @@ export function ExerciseDoScreen({ route }) {
           text="+"
         />
         <TextInput
-          onChangeText={(text) => setSets(text)}
+          onChangeText={(value) => setSets(value)}
           value={sets}
           style={CONTENT}
           placeholderTextColor="#e0e0e0"

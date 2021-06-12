@@ -27,10 +27,6 @@
   },
 
 
-  "storybook": {
-    "placeholder": "Placeholder",
-    "field": "Field"
-  },
   "progress": {
       "title": "PROGRESS"
   }

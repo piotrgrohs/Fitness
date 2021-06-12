@@ -64,7 +64,7 @@ export function ProfileScreen() {
         <Header headerText="Profile" leftIcon="back" titleStyle={TITLE} onLeftPress={home} />
         <Text style={CONTENT}>Your name:</Text>
         <TextInput
-          onChangeText={(test) => dispatch(setName(test))}
+          onChangeText={(value) => dispatch(setName(value))}
           value={name_state}
           style={INPUT}
           placeholderTextColor="#e0e0e0"
@@ -72,7 +72,7 @@ export function ProfileScreen() {
         <Text style={CONTENT}>Height:</Text>
         <View style={{ flexDirection: "row" }}>
           <TextInput
-            onChangeText={(text) => dispatch(setHeight(text))}
+            onChangeText={(value) => dispatch(setHeight(value))}
             value={height_state}
             style={INPUT}
             placeholderTextColor="#e0e0e0"
@@ -82,7 +82,7 @@ export function ProfileScreen() {
         <Text style={CONTENT}>Weight:</Text>
         <View style={{ flexDirection: "row" }}>
           <TextInput
-            onChangeText={(text) => dispatch(setWeight(text))}
+            onChangeText={(value) => dispatch(setWeight(value))}
             value={weight_state}
             style={INPUT}
             placeholderTextColor="#e0e0e0"
@@ -91,7 +91,7 @@ export function ProfileScreen() {
         </View>
         <Text style={CONTENT}>Age:</Text>
         <TextInput
-          onChangeText={(text) => dispatch(setAge(text))}
+          onChangeText={(value) => dispatch(setAge(value))}
           value={age_state}
           style={INPUT}
           placeholderTextColor="#e0e0e0"

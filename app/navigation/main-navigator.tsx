@@ -6,10 +6,17 @@
  */
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
-import { WelcomeScreen,   InformationScreen,
-   GoalScreen, ExerciseScreen,ExerciseDoScreen,
-    ExerciseDescriptionScreen, ProgressScreen, 
-  HomeScreen, ProfileScreen } from "../screens"
+import {
+  WelcomeScreen,
+  InformationScreen,
+  GoalScreen,
+  ExerciseScreen,
+  ExerciseDoScreen,
+  ExerciseDescriptionScreen,
+  ProgressScreen,
+  HomeScreen,
+  ProfileScreen,
+} from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -25,7 +32,7 @@ import { WelcomeScreen,   InformationScreen,
  */
 export type PrimaryParamList = {
   home: undefined
-  welcome: undefined 
+  welcome: undefined
   info: undefined
   goal: undefined
   exercise: undefined
@@ -33,7 +40,6 @@ export type PrimaryParamList = {
   exercisedescription: undefined
   profile: undefined
   progress: undefined
-
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -47,7 +53,7 @@ export function MainNavigator() {
       }}
     >
       <Stack.Screen name="home" component={HomeScreen} />
-      <Stack.Screen name="welcome" component={WelcomeScreen} /> 
+      <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="info" component={InformationScreen} />
       <Stack.Screen name="goal" component={GoalScreen} />
       <Stack.Screen name="exercise" component={ExerciseScreen} />

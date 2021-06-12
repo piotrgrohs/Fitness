@@ -29,9 +29,9 @@ const LIST_ITEM: TextStyle = {
 }
 
 const ROW_FRONT: TextStyle = {
-        backgroundColor: 'black',
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+  backgroundColor: "black",
+  borderBottomColor: "black",
+  borderBottomWidth: 1,
 }
 
 function ProgressList(props) {
@@ -39,7 +39,7 @@ function ProgressList(props) {
   const listDisplay = Object.keys(list).map((key) => list[key])
   let exercise_name = (id) => listDisplay[id].title
   return (
-    <TouchableHighlight underlayColor={'#AAA'} style={ROW_FRONT}>
+    <TouchableHighlight underlayColor={"#AAA"} style={ROW_FRONT}>
       <View style={{ marginBottom: 20 }}>
         <Text style={CENTER}>{moment(props.date).format("YYYY-MM-DD").toString()}</Text>
         <View style={BLOCK}>

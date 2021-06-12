@@ -165,7 +165,6 @@ export function ProgressScreen({ route }) {
   }
 
   const onRowDidOpen = (rowKey) => {
-    console.log("This row opened", rowKey)
   }
 
   const home = () => {

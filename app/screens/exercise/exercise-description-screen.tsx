@@ -1,7 +1,7 @@
-import React, { useMemo } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { FlatList, SafeAreaView, SectionList, ViewStyle } from "react-native"
-import { Screen, Button, Text, Wallpaper, Header } from "../../components"
+import React from "react"
+import { useSelector } from "react-redux"
+import { FlatList, SafeAreaView, ViewStyle } from "react-native"
+import { Button, Text, Wallpaper, Header } from "../../components"
 import { View, TextStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
@@ -74,7 +74,7 @@ export function ExerciseDescriptionScreen({ route }) {
       <FlatList
         style={CONTAINER}
         data={exercise.data}
-        keyExtractor={({item,index}) => index}
+        keyExtractor={({index}) => index}
         renderItem={({ item, index }) => (
           <Text key={item} style={LIST_ITEM}>
             {index + 1}.{item}

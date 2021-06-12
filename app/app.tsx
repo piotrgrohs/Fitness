@@ -14,12 +14,9 @@ import "./utils/ignore-warnings"
 import React, { useState, useEffect, useRef } from "react"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
-import { initFonts } from "./theme/fonts" // expo
 import * as storage from "./utils/storage"
 import { Provider } from 'react-redux';
 import {store} from './models/redux/store';
-import { PersistGate } from 'redux-persist/integration/react'
-
 
 import {
   useBackButtonHandler,
@@ -28,8 +25,6 @@ import {
   setRootNavigation,
   useNavigationPersistence,
 } from "./navigation"
-import { RootStore, RootStoreProvider, setupRootStore } from "./models"
-import { ToggleStorybook } from "../storybook/toggle-storybook"
 
 import { enableScreens } from "react-native-screens"
 enableScreens()
@@ -38,7 +33,6 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
 function App() {
   const navigationRef = useRef<NavigationContainerRef>()
-  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
 
   setRootNavigation(navigationRef)
   useBackButtonHandler(navigationRef, canExit)
@@ -47,20 +41,8 @@ function App() {
     NAVIGATION_PERSISTENCE_KEY,
   )
 
-  useEffect(() => {
-    ; (async () => {
-      await initFonts() // expo
-      setupRootStore().then(setRootStore)
-    })()
-  }, [])
-
-  if (!rootStore) return null
-
   return (
-    <ToggleStorybook>
       <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistedStore}> */}
-        <RootStoreProvider value={rootStore}>
           <SafeAreaProvider initialMetrics={initialWindowMetrics}>
             <RootNavigator
               ref={navigationRef}
@@ -68,10 +50,7 @@ function App() {
               onStateChange={onNavigationStateChange}
             />
           </SafeAreaProvider>
-        </RootStoreProvider>
-        {/* </PersistGate> */}
       </Provider>
-    </ToggleStorybook>
   )
 }
 
