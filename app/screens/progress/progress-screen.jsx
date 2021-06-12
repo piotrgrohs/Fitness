@@ -1,22 +1,19 @@
 import { useNavigation } from "@react-navigation/native"
 import moment from "moment"
 import React, { useEffect } from "react"
-import { TextStyle, View, ViewStyle, Image, Modal, Pressable } from "react-native"
+import { TextStyle, View, ViewStyle, Image, Modal, Pressable, TouchableOpacity } from "react-native"
 import { Calendar } from "react-native-calendars"
-import { FlatList } from "react-native-gesture-handler"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { Header, Text, Wallpaper } from "../../components"
+import { setExercises } from "../../models/redux/reducers/personSlice"
 import { spacing } from "../../theme"
+import ProgressList from "./progress-list"
+import { SwipeListView } from "react-native-swipe-list-view"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   marginTop: 20,
   marginBottom: 10,
-}
-
-const CONTINUE: TextStyle = {
-  paddingVertical: spacing,
-  backgroundColor: "#00eeff",
 }
 
 const TEXT: TextStyle = {}
@@ -30,13 +27,6 @@ const TITLE: TextStyle = {
   textTransform: "uppercase",
 }
 
-const CONTINUE_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-
 const MODALVIEW: TextStyle = {
   margin: 20,
   backgroundColor: "white",
@@ -44,18 +34,6 @@ const MODALVIEW: TextStyle = {
   padding: 35,
   alignItems: "center",
   elevation: 1,
-}
-
-const CONTENT: TextStyle = {
-  ...TEXT,
-  fontSize: 20,
-  lineHeight: 22,
-  marginBottom: spacing,
-}
-
-const FOOTER: ViewStyle = {}
-const FOOTER_CONTENT: ViewStyle = {
-  paddingVertical: spacing,
 }
 
 const LIST_ITEM: TextStyle = {
@@ -66,90 +44,87 @@ const LIST_ITEM: TextStyle = {
   alignSelf: "flex-start",
 }
 
-const BLOCK: ViewStyle = {
-  marginTop: 15,
-  marginLeft: 30,
-}
-const CENTER: TextStyle = {
-  fontSize: 20,
-  textAlign: "center",
-}
-
-const FITNESSCUP: TextStyle = {
-}
+const FITNESSCUP: TextStyle = {}
 
 const FITNESSCUP_TEXT: TextStyle = {
   ...LIST_ITEM,
-  color: 'black',
+  color: "black",
   fontSize: 20,
-  alignSelf:'center'
+  alignSelf: "center",
 }
 
-const button: TextStyle ={
+const BUTTON: TextStyle = {
   borderRadius: 20,
   padding: 10,
-  elevation: 2
+  elevation: 2,
 }
 
-const buttonClose: TextStyle ={
+const BUTTON_CLOSE: TextStyle = {
   backgroundColor: "#2196F3",
 }
 
-function FitnessCup(props) {
-  const [id,setId] = React.useState(props.id)
-  const [modalVisible, setModalVisible] = React.useState(true);
-  return (
-  <Modal
-    animationType="slide"
-    transparent={true}
-    visible={modalVisible}
-    onRequestClose={() => {
-      Alert.alert("Modal has been closed.")
-      setModalVisible(!modalVisible)
-    }}
-  >
-    <View  style={MODALVIEW}>
-      <View  style={MODALVIEW}>
-        <Text  style={FITNESSCUP_TEXT}>achievement</Text>
-        <Image style={FITNESSCUP} source={require("./FitnessCup.png")} />
-        <Pressable
-          onPress={() => setModalVisible(!modalVisible)}
-        >
-          <Text style={[button, buttonClose]}>DONE</Text>
-        </Pressable>
-      </View>
-    </View>
-  </Modal>
-  )
-  }
+const ROWBACK: ViewStyle = {
+  alignItems: "center",
+  flex: 1,
+  flexDirection: "row",
+  justifyContent: "space-between",
+  paddingLeft: 15,
+}
 
-function ProgressList(props){
-  const list = useSelector((state) => state.exercise.list)
-  const listDisplay = Object.keys(list).map((key) => list[key])
-  let exercise_name = (id) => listDisplay[id].title
-  return ( 
-    <View style={{ marginBottom: 20 }}>
-      <Text style={CENTER}>{moment(props.date).format("YYYY-MM-DD").toString()}</Text>
-      <View style={BLOCK}>
-        <Text style={LIST_ITEM}>EXERCISE: {exercise_name(props.id)}</Text>
-        <Text style={LIST_ITEM}>
-          REPS: {props.reps} - SETS: {props.sets}
-        </Text>
+const BACK_RIGHT_BUTTON: ViewStyle = {
+  alignItems: "center",
+  bottom: 0,
+  justifyContent: "center",
+  position: "absolute",
+  top: 0,
+  width: 75,
+}
+const DELETE_BUTTON: ViewStyle = {
+  backgroundColor: "red",
+  right: 0,
+}
+
+function FitnessCup(props) {
+  const [modalVisible, setModalVisible] = React.useState(props.cup)
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.")
+        setModalVisible(!modalVisible)
+      }}
+    >
+      <View style={MODALVIEW}>
+        <View style={MODALVIEW}>
+          <Text style={FITNESSCUP_TEXT}>achievement</Text>
+          <Image style={FITNESSCUP} source={require("./FitnessCup.png")} />
+          <Pressable onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={[BUTTON, BUTTON_CLOSE]}>DONE</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </Modal>
   )
 }
-  
-export function ProgressScreen() {
+
+export function ProgressScreen({ route }) {
   const exercises = useSelector((state) => state.person.exercises)
-  const list = useSelector((state) => state.exercise.list)
-  const listDisplay = Object.keys(list).map((key) => list[key])
-  const [exercises_state, setExercises] = React.useState(exercises)
+  const [exercises_state, setExercisesState] = React.useState(exercises)
   const [day_before, setDayBefore] = React.useState("")
   const [markedDates, setMarkedDates] = React.useState({})
+  const dispatch = useDispatch()
+  let cup = route.params != undefined ? route.params.cup : false
+  const [cupVisible, setcupVisible] = React.useState(cup)
   const navigation = useNavigation()
 
   useEffect(() => {
+    setCalendar()
+  }, [])
+
+
+  const setCalendar = () => (
     setMarkedDates(
       exercises.reduce(
         (markedDates, exercise) => (
@@ -162,16 +137,18 @@ export function ProgressScreen() {
         {},
       ),
     )
-  }, [])
-  
-  const renderItem = ({ item }) => (<ProgressList date={item.date} id={item.id} reps={item.reps} sets={item.sets} workouts_state/>)
+  )
+  const renderItem = ({ item }) => (
+    <ProgressList date={item.date} id={item.id} reps={item.reps} sets={item.sets} workouts_state />
+  )
+
   const pickDate = (day) => {
     let markedDatesCpy = { ...markedDates }
     if (day_before != "") {
       markedDatesCpy[day_before] = { ...markedDatesCpy[day_before], selected: false }
     }
     markedDatesCpy[day.dateString] = { ...markedDatesCpy[day.dateString], selected: true }
-    setExercises(
+    setExercisesState(
       exercises.filter(
         (excercise) => moment(excercise.date).format("YYYY-MM-DD") == day.dateString,
       ),
@@ -179,17 +156,42 @@ export function ProgressScreen() {
     setDayBefore(day.dateString)
     setMarkedDates(markedDatesCpy)
   }
+
   const reset = () => {
-    setExercises(exercises)
+    let markedDatesCpy = { ...markedDates }
+    markedDatesCpy[day_before] = { ...markedDatesCpy[day_before], selected: false }
+    setMarkedDates(markedDatesCpy)
+    setExercisesState(exercises)
   }
+
+  const onRowDidOpen = (rowKey) => {
+    console.log("This row opened", rowKey)
+  }
+
   const home = () => {
     navigation.navigate("home")
   }
 
+  const deleteExerciseFromList = (date) => {
+    dispatch(setExercises(exercises.filter((exercise) => exercise.date !== date)))
+    setExercisesState(exercises.filter((exercise) => exercise.date !== date))
+  }
+
+  const renderHiddenItem = (data, rowMap) => (
+    <View style={ROWBACK}>
+      <TouchableOpacity
+        style={[BACK_RIGHT_BUTTON, DELETE_BUTTON]}
+        onPress={() => deleteExerciseFromList(data.item.date)}
+      >
+        <Text>DELETE</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
   return (
     <View testID="ProgressScreen" style={FULL}>
       <Wallpaper />
-      <FitnessCup/>
+      <FitnessCup cup={cupVisible} />
       <Header
         headerText="Progress"
         leftIcon="back"
@@ -230,11 +232,17 @@ export function ProgressScreen() {
         onDayPress={(day) => pickDate(day)}
         markedDates={markedDates}
       />
-      <FlatList
-        style={CONTAINER}
+      <SwipeListView
         data={exercises_state}
         renderItem={renderItem}
+        rightOpenValue={-150}
+        style={CONTAINER}
+        previewRowKey={"0"}
+        renderHiddenItem={renderHiddenItem}
+        previewOpenValue={-40}
         keyExtractor={(item) => item.date}
+        previewOpenDelay={3000}
+        onRowDidOpen={onRowDidOpen}
       />
     </View>
   )

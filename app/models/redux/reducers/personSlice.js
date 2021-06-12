@@ -30,15 +30,21 @@ export const personSlice = createSlice({
         setDate: (state,action)=>{
                 state.date = action.payload
         },
+        setExercises: (state,action)=>{
+            state.exercises = action.payload
+        },
         addExercise: (state,action) => {
             state.exercises.push(action.payload)
         },
         filterExercise: (state, action) => {
             state.exercises = state.exercises.filter(exercise => {exercise.date == action.payload})
+        },
+        deleteExercise: (state,action)=>{
+            state.exercises = state.exercises.filter((exercise) => exercise.date !== action.payload)
         }
     }
 })
 
-export const { setAge, setHeight, setWeight, setName, setGoal, setDate, addExercise, filterExercise, getExerciseName } = personSlice.actions
+export const { setAge, setHeight, setWeight, setName, setGoal, setDate, addExercise, filterExercise, getExerciseName, setExercises, deleteExercise } = personSlice.actions
 
 export default personSlice.reducer;

@@ -7,6 +7,9 @@ import { View, TextStyle } from "react-native"
 import { addExercise } from "../../models/redux/reducers/personSlice"
 import { color, spacing, typography } from "../../theme"
 import { useNavigation } from "@react-navigation/native"
+import { useSelector } from "react-redux"
+import moment from "moment"
+import { length } from "ramda"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -91,7 +94,7 @@ export function ExerciseDoScreen({ route }) {
   const [sets, setSets] = React.useState(routeSets.toString())
   const dispatch = useDispatch()
   const navigation = useNavigation()
-
+  const exercises = useSelector((state) => state.person.exercises)
   const increse_reps = () => {
     let numberOfReps = parseInt(reps) + 1
     setReps(numberOfReps.toString())
@@ -111,10 +114,18 @@ export function ExerciseDoScreen({ route }) {
     setSets(numberOfSets.toString())
   }
 
+  const get_daily_challenge = (exercises) => {
+    return exercises.filter(
+      (exercise) =>
+        moment(exercise.date).format("YYYY-MM-DD") == moment(Date.now()).format("YYYY-MM-DD"),
+    )
+  }
+
   const complete = () => {
     let date = Date.now()
     dispatch(addExercise({ reps: reps, sets: sets, id: id, date: date }))
-    navigation.navigate("progress")
+    let cup = length(get_daily_challenge(exercises)) > 0 ? false : true
+    navigation.navigate("progress", { cup: cup })
   }
   const cancel = () => {
     navigation.navigate("home")
