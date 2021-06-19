@@ -4,9 +4,9 @@ import React, { useEffect } from "react"
 import { TextStyle, View, ViewStyle, Image, Modal, Pressable, TouchableOpacity } from "react-native"
 import { Calendar } from "react-native-calendars"
 import { useSelector, useDispatch } from "react-redux"
-import { Header, Text, Wallpaper } from "../../components"
+import { Header, Text, Wallpaper, Screen } from "../../components"
 import { setExercises } from "../../models/redux/reducers/personSlice"
-import { spacing } from "../../theme"
+import { color, spacing, typography } from "../../theme"
 import ProgressList from "./progress-list"
 import { SwipeListView } from "react-native-swipe-list-view"
 
@@ -191,6 +191,7 @@ export function ProgressScreen({ route }) {
     <View testID="ProgressScreen" style={FULL}>
       <Wallpaper />
       <FitnessCup cup={cupVisible} />
+      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
       <Header
         headerText="Progress"
         leftIcon="back"
@@ -243,6 +244,7 @@ export function ProgressScreen({ route }) {
         previewOpenDelay={3000}
         onRowDidOpen={onRowDidOpen}
       />
+      </Screen>
     </View>
   )
 }

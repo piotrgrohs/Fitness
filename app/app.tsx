@@ -13,7 +13,7 @@ import "./i18n"
 import "./utils/ignore-warnings"
 import React, { useState, useEffect, useRef } from "react"
 import { NavigationContainerRef } from "@react-navigation/native"
-import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
+import { registerRootComponent } from 'expo'
 import * as storage from "./utils/storage"
 import { Provider } from 'react-redux';
 import {store} from './models/redux/store';
@@ -43,13 +43,11 @@ function App() {
 
   return (
       <Provider store={store}>
-          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
             <RootNavigator
               ref={navigationRef}
               initialState={initialNavigationState}
               onStateChange={onNavigationStateChange}
             />
-          </SafeAreaProvider>
       </Provider>
   )
 }
