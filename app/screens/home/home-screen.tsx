@@ -49,7 +49,7 @@ export function HomeScreen() {
          <Text onPress={()=> navigation.navigate("progress")}
         style={LIST_ITEM}   >Progress</Text>
         <Text onPress={()=> navigation.navigate("info")}
-        style={LIST_ITEM}   >Start from begin</Text>
+        style={LIST_ITEM}   >Start from begining</Text>
       </Screen>
       
     </View>
