@@ -38,7 +38,7 @@ const LIST_ITEM: TextStyle = {
 export function ExerciseScreen() {
   const navigation = useNavigation()
   const list = useSelector((state) => state.exercise.list)
-  const listDisplay = Object.keys(list)
+  const exercises = Object.keys(list)
     .map((key) => list[key])
     .sort((a, b) => a.title.localeCompare(b.title))
   const home = () => {
@@ -49,7 +49,7 @@ export function ExerciseScreen() {
       <Wallpaper />
       <Header headerText="Exercises" leftIcon="back" titleStyle={TITLE} onLeftPress={home} />
       <FlatList
-        data={listDisplay}
+        data={exercises}
         style={CONTAINER}
         renderItem={({ item }) => (
           <Text
