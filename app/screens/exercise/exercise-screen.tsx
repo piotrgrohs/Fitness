@@ -38,7 +38,11 @@ const LIST_ITEM: TextStyle = {
 export function ExerciseScreen() {
   const navigation = useNavigation()
   const list = useSelector((state) => state.exercise.list)
-  const exercises = Object.keys(list)
+  const person = useSelector((state) => state.person)
+  const listGroup = useSelector((state) => state.groupExercise.list)
+  const filterListGroup = listGroup.filter((obj)=> obj.name == person.preference)
+  const filterListOfExercises = filterListGroup[0].exercises.map((value) => Object.values(list).filter((obj)=> obj.id == value ))
+  const exercises = Object.keys(filterListOfExercises)
     .map((key) => list[key])
     .sort((a, b) => a.title.localeCompare(b.title))
   const home = () => {

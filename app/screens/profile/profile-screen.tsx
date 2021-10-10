@@ -4,8 +4,9 @@ import { TextStyle, View, ViewStyle } from "react-native"
 import { TextInput } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
 import { Header, Screen, Text, Wallpaper } from "../../components"
-import { setAge, setHeight, setName, setWeight } from "../../models/redux/reducers/personSlice"
+import { setAge, setHeight, setName, setWeight, setPreference } from "../../models/redux/reducers/personSlice"
 import { color, spacing, typography } from "../../theme"
+import DropDownPicker from 'react-native-dropdown-picker'
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -45,13 +46,34 @@ const INPUT: TextStyle = {
   marginBottom: 30,
 }
 
+const PICKER: TextStyle = {
+  ...INPUT,
+  backgroundColor: "black"
+}
+
 export function ProfileScreen() {
   const name_state = useSelector((state) => state.person.name)
   const age_state = useSelector((state) => state.person.age)
   const height_state = useSelector((state) => state.person.height)
   const weight_state = useSelector((state) => state.person.weight)
+  const preferance_state = useSelector((state) => state.person.preference)
+  const person = useSelector((state) => state.person)
   const dispatch = useDispatch()
   const navigation = useNavigation()
+
+
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(preferance_state);
+  const [items, setItems] = React.useState([
+    {label: 'Lost', value: 'lost'},
+    {label: 'Ass', value: 'ass'},
+    {label: 'Power', value: 'power'},
+  ]);
+
+
+  const setPreferenceValue = (callback) => {
+    dispatch(setPreference(callback(callback)))
+  }
 
   const home = () => {
     navigation.navigate("home")
@@ -60,15 +82,15 @@ export function ProfileScreen() {
   return (
     <View testID="ProfileScreen" style={FULL}>
       <Wallpaper />
-      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+      <Screen style={CONTAINER} backgroundColor={color.transparent}>
         <Header headerText="Profile" leftIcon="back" titleStyle={TITLE} onLeftPress={home} />
-        <Text style={CONTENT}>Your name:</Text>
+        <Text tx={`infomationScreen.name`} />
         <TextInput
           onChangeText={(value) => dispatch(setName(value))}
           value={name_state}
           style={INPUT}
         />
-        <Text style={CONTENT}>Height:</Text>
+        <Text tx={`infomationScreen.height`} />
         <View style={{ flexDirection: "row" }}>
           <TextInput
             onChangeText={(value) => dispatch(setHeight(value))}
@@ -77,7 +99,7 @@ export function ProfileScreen() {
           />
           <Text style={{}}>cm</Text>
         </View>
-        <Text style={CONTENT}>Weight:</Text>
+        <Text tx={`infomationScreen.weight`} />
         <View style={{ flexDirection: "row" }}>
           <TextInput
             onChangeText={(value) => dispatch(setWeight(value))}
@@ -86,12 +108,23 @@ export function ProfileScreen() {
           />
           <Text style={{}}>kg</Text>
         </View>
-        <Text style={CONTENT}>Age:</Text>
+        <Text tx={`infomationScreen.age`} />
         <TextInput
           onChangeText={(value) => dispatch(setAge(value))}
           value={age_state}
           style={INPUT}
         />
+        <Text tx={`infomationScreen.preferances`} />
+         <DropDownPicker
+      open={open}
+      value={Object.entries(items).filter(([key,value])=> value.value == preferance_state)[0][1].value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setPreferenceValue}
+      setItems={setItems}
+      style={PICKER}
+      theme="DARK"
+    />
       </Screen>
     </View>
   )

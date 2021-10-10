@@ -3,6 +3,7 @@ import React from "react"
 import { SafeAreaView, TextStyle, View, ViewStyle } from "react-native"
 import { TextInput } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
+import DropDownPicker from 'react-native-dropdown-picker'
 import { Button, Screen, Text, Wallpaper } from "../../components"
 import {
   setAge,
@@ -10,6 +11,7 @@ import {
   setHeight,
   setName,
   setWeight,
+  setPreference
 } from "../../models/redux/reducers/personSlice"
 import { color, spacing, typography } from "../../theme"
 
@@ -64,6 +66,11 @@ const INPUT: TextStyle = {
   marginBottom: 30,
 }
 
+const PICKER: TextStyle = {
+  ...INPUT,
+  backgroundColor: "black"
+}
+
 const FOOTER: ViewStyle = {}
 const FOOTER_CONTENT: ViewStyle = {
   paddingVertical: spacing[4],
@@ -74,15 +81,26 @@ export function InformationScreen() {
   const [name, setNameInput] = React.useState("")
   const [height, setHeightInput] = React.useState()
   const [weight, setWeigthInput] = React.useState()
+  const [preference, setPreferencePicker] = React.useState()
   const [age, setAgeInput] = React.useState()
   const dispatch = useDispatch()
   const navigation = useNavigation()
+
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(null);
+  const [items, setItems] = React.useState([
+    {label: 'Lost', value: 'lost'},
+    {label: 'Ass', value: 'ass'},
+    {label: 'Power', value: 'power'},
+  ]);
+
 
   const submit = () => {
     dispatch(setAge(age))
     dispatch(setHeight(height))
     dispatch(setWeight(weight))
     dispatch(setName(name))
+    dispatch(setPreference(value))
     const date = new Date()
     dispatch(setDate(date.toString()))
     navigation.navigate("goal")
@@ -91,7 +109,7 @@ export function InformationScreen() {
   return (
     <View testID="InformationScreen" style={FULL}>
       <Wallpaper />
-      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+      <Screen style={CONTAINER} backgroundColor={color.transparent}>
         <Text style={TITLE} preset="header" text="About You" />
         <Text tx={`infomationScreen.name`} />
         <TextInput
@@ -127,6 +145,17 @@ export function InformationScreen() {
           style={INPUT}
           placeholderTextColor="#e0e0e0"
         />
+        <Text tx={`infomationScreen.preferances`} />
+        <DropDownPicker
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={(value)=> setValue(value)}
+      setItems={setItems}
+      style={PICKER}
+      theme="DARK"
+    />
       </Screen>
       <SafeAreaView style={FOOTER}>
         <View style={FOOTER_CONTENT}>

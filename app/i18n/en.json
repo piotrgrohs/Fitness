@@ -19,6 +19,7 @@
     "name":"NAME",
     "weight":"WEIGHT",
     "age":"AGE",
+    "preferances":"PREFERENCES",
     "title": "TELL ME ABOUT YOURSELF",
     "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
     "reactotron": "COMPLETE",

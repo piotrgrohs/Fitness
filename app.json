@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash_fitwoman.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },

@@ -9,7 +9,8 @@ export const personSlice = createSlice({
         age: 0,
         weightgoal: 0,
         date: '', 
-        exercises: []
+        exercises: [],
+        preference: ""
     },
     reducers: {
         setName: (state, action) => {
@@ -33,6 +34,9 @@ export const personSlice = createSlice({
         setExercises: (state,action)=>{
             state.exercises = action.payload
         },
+        setPreference: (state,action)=>{
+            state.preference = action.payload
+        },
         addExercise: (state,action) => {
             state.exercises.push(action.payload)
         },
@@ -45,6 +49,6 @@ export const personSlice = createSlice({
     }
 })
 
-export const { setAge, setHeight, setWeight, setName, setGoal, setDate, addExercise, filterExercise, getExerciseName, setExercises, deleteExercise } = personSlice.actions
+export const { setAge, setHeight, setWeight, setName, setGoal, setDate, setPreference, addExercise, filterExercise, getExerciseName, setExercises, deleteExercise } = personSlice.actions
 
 export default personSlice.reducer;

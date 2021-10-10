@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native"
 import React from "react"
-import { TextStyle, View, ViewStyle } from "react-native"
+import { Image, TextStyle, View, ViewStyle } from "react-native"
 import { Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 
@@ -9,6 +9,17 @@ const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
 }
+
+const LOGO: ViewStyle = {
+  width: 200,
+  height: 300
+}
+
+const LOGO_CONTAINER: ViewStyle = {
+  justifyContent: 'center',
+  alignItems: 'center',
+}
+
 
 const TEXT: TextStyle = {
   color: color.palette.white,
@@ -41,7 +52,13 @@ export function HomeScreen() {
     <View testID="HomeScreen" style={FULL}>
       <Wallpaper />
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-        <Text style={TITLE} preset='header' text="Fitness" />
+          <Text style={TITLE} preset='header' text="Fitness" />
+        <View style={LOGO_CONTAINER}>
+          <Image
+            style={LOGO}
+            source={require('./logo.png')}
+          />
+        </View>
         <Text onPress={()=> navigation.navigate("exercise")}
                      style={LIST_ITEM}   >Exercises</Text>
         <Text onPress={()=> navigation.navigate("profile")}
